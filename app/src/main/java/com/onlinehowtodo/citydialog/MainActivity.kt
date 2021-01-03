@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.gson.Gson
 import com.onlinehowtodo.citydialog.databinding.ActivityMainBinding
@@ -12,8 +13,8 @@ import com.onlinehowtodo.citydialog.databinding.AddCityDialogBinding
 class MainActivity : AppCompatActivity() {
     val cityData = mutableListOf<City>()
     val CITY_KEY: String = "CITY_KEY"
-    lateinit var binding:ActivityMainBinding
-    lateinit var adapter:CityAdapter
+    lateinit var binding: ActivityMainBinding
+    lateinit var adapter: CityAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,18 +28,18 @@ class MainActivity : AppCompatActivity() {
                 addCityData()
             }
         }
-         adapter = CityAdapter(cityData)
-        binding.cityListView.adapter =adapter
+        adapter = CityAdapter(cityData)
+        binding.cityListView.adapter = adapter
 
 
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         saveCityData()
     }
 
-    fun addCityData(){
+    fun addCityData() {
         val builder = AlertDialog.Builder(this)
         val view = AddCityDialogBinding.inflate(layoutInflater)
         with(builder) {
@@ -48,7 +49,8 @@ class MainActivity : AppCompatActivity() {
             setPositiveButton("Yes") { _, i ->
                 val cityName = view.cityNameTxt.text.toString()
                 val cityCapital = view.cityCapitalTxt.text.toString()
-                val city =City(cityName,cityCapital)
+
+                val city = City(cityName, cityCapital)
                 cityData.add(city)
                 adapter.notifyDataSetChanged()
             }
