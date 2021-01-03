@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             setPositiveButton("Yes") { _, i ->
                 cityData.clear()
                 saveCityData()
+                adapter.notifyDataSetChanged()
             }
             setNegativeButton("No") { _, i ->
 
