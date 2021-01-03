@@ -12,7 +12,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toEndOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="City Name" />
+        android:text="City Name" />
 
     <EditText
         android:id="@+id/city_name_txt"
@@ -29,10 +29,10 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/city_name_txt"
         app:layout_constraintTop_toBottomOf="@+id/city_name_txt"
-        tools:text="City Capital" />
+        android:text="City Capital" />
 
     <EditText
         android:id="@+id/city_capital_txt"
