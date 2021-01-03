@@ -12,7 +12,7 @@ import com.onlinehowtodo.citydialog.databinding.AddCityDialogBinding
 class MainActivity : AppCompatActivity() {
     val cityData = mutableListOf<City>()
     val CITY_KEY: String = "CITY_KEY"
-    lateinit var binding: ActivityMainBinding
+    lateinit var binding:ActivityMainBinding
     lateinit var adapter:CityAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
