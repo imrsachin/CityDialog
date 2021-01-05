@@ -33,7 +33,7 @@
             app:layout_constraintStart_toEndOf="@+id/reset_btn"
             app:layout_constraintTop_toTopOf="@+id/reset_btn" />
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/city_list_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -44,8 +44,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/city_details">
+            tools:listitem="@layout/city_details" />
 
-        </ListView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
