@@ -4,43 +4,49 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.onlinehowtodo.citydialog.databinding.CityDetailsBinding
 
-class CityAdapter(val cityData: MutableList<City>) : BaseAdapter() {
-    override fun getCount(): Int {
-        return cityData.size
-    }
 
-    override fun getItem(position: Int): Any {
-        return cityData[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return cityData[position].name.hashCode().toLong()
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view: View
-        val viewHolder: ViewHolder
-        if (convertView == null) {
-            val binding = CityDetailsBinding.inflate(LayoutInflater.from(parent!!.context))
-            view = binding.root
-            viewHolder = ViewHolder(binding)
-            view.tag = viewHolder
-        } else {
-            view = convertView
-            viewHolder = convertView.tag as ViewHolder
+class CityAdapter(val listener: (City) -> Unit) :
+    ListAdapter<City, CityAdapter.ViewHolder>(object : DiffUtil.ItemCallback<City>() {
+        override fun areItemsTheSame(oldItem: City, newItem: City): Boolean {
+            return oldItem.name == newItem.name
         }
-        with(viewHolder) {
-            cityName.text = cityData[position].name
-            cityCapital.text = cityData[position].capital
-        }
-        return view
 
+        override fun areContentsTheSame(oldItem: City, newItem: City): Boolean {
+            return oldItem == newItem
+        }
+    }) {
+
+    inner class ViewHolder(private val view: View) :
+        RecyclerView.ViewHolder(view) {
+        private val cityName:TextView = view.findViewById(R.id.city_name)
+        private val cityCapital:TextView = view.findViewById(R.id.city_capital)
+
+        init {
+            itemView.setOnClickListener {
+                listener.invoke(getItem(layoutPosition))
+            }
+        }
+
+        fun bind(city: City) {
+            with(city) {
+                cityName.text = name
+                cityCapital.text = capital
+            }
+        }
     }
 
-    class ViewHolder(val binding: CityDetailsBinding) {
-        val cityName = binding.cityName
-        val cityCapital = binding.cityCapital
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityAdapter.ViewHolder {
+        val binding = LayoutInflater.from(parent.context).inflate(R.layout.city_details,parent,false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: CityAdapter.ViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
 }
